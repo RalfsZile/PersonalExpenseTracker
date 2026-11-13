@@ -90,6 +90,10 @@ def calculate_total_expenses():
 
     return total
 
+def calculate_balance():
+    balance = calculate_total_income() - calculate_total_expenses()
+    return balance
+
 def display_menu():
     print("\n================================")
     print("     PERSONAL EXPENSE TRACKER")
@@ -119,6 +123,10 @@ def view_transactions():
 
 
 def main():
+    print(f"Total income: €{calculate_total_income():.2f}")
+    print(f"Total expenses: €{calculate_total_expenses():.2f}")
+    print(f"Current balance: €{calculate_balance():.2f}")
+
     while True:
         display_menu()
 
