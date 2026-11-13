@@ -2,11 +2,7 @@
 import unittest
 
 # Import transaction functions and the shared transaction list.
-from transactions import (
-    add_transaction,
-    delete_transaction,
-    transactions
-)
+from transactions import add_transaction, transactions
 
 
 # Create a test class for transaction management.
