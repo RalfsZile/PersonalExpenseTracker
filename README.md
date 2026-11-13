@@ -1,73 +1,120 @@
 # Personal Expense Tracker
 
-## 1. Project Description
+A Python-based command-line application for managing personal income and expenses. The application uses an SQLite database to store financial transactions and provides tools for tracking and analyzing personal finances.
 
-Personal Expense Tracker is a Python application designed to help users manage their personal finances. It allows users to record income and expenses, organize transactions into categories, and monitor their financial balance.
+## Features
 
-The application uses JSON files to store transaction information, allowing data to remain available after the program is closed.
-
-## 2. Features
-
-- Add income transactions.
-- Add expense transactions.
+- Add income and expense transactions.
+- Assign categories to transactions.
 - View all recorded transactions.
-- Edit existing transactions.
-- Delete transactions.
-- Search transactions by description.
-- Organize transactions into categories.
-- Automatically record transaction dates.
 - Calculate total income and expenses.
 - Display the current financial balance.
-- Save and load transaction data using JSON.
-- Automated tests using Python's unittest framework.
+- Edit and delete transactions.
+- Search transactions by description.
+- Store transaction data in an SQLite database.
+- Apply database migrations to manage database structure.
+- Run automated unit tests.
+- Automatically execute tests through GitHub Actions.
 
-## 3. Technologies Used
+## Technologies Used
 
 - Python 3
-- JSON
-- Git
-- GitHub
+- SQLite
+- SQL
+- Git and GitHub
+- GitHub Actions
 - unittest
 
-## 4. Project Structure
+## Project Structure
 
-- `main.py` – Main application and navigation menu.
-- `transactions.py` – Transaction management functionality.
-- `finance_statistics.py` – Financial calculations and statistics.
-- `storage.py` – Saving and loading transaction data.
-- `transactions.json` – Automatically generated transaction storage file.
-- `tests/` – Automated application tests.
-  - `test_statistics.py`
-  - `test_transactions.py`
-  - `test_storage.py`
+```text
+PersonalExpenseTracker/
+│
+├── .github/
+│   └── workflows/
+│       └── tests.yml
+│
+├── migrations/
+│   └── 001_create_transactions.sql
+│
+├── tests/
+│   ├── test_statistics.py
+│   ├── test_transactions.py
+│   └── test_storage.py
+│
+├── main.py
+├── transactions.py
+├── finance_statistics.py
+├── storage.py
+├── migrate.py
+├── .gitignore
+└── README.md
+```
 
-## 5. Installation and Usage
+## Installation and Usage
 
-1. Clone the repository from GitHub.
-2. Open the project directory.
-3. Make sure Python 3 is installed.
-4. Run the application using:
+1. Clone the repository:
 
-   `python main.py`
+```bash
+git clone https://github.com/RalfsZile/PersonalExpenseTracker.git
+```
 
-5. Select an option from the application menu.
+2. Open the project directory:
 
-## 6. Running Automated Tests
+```bash
+cd PersonalExpenseTracker
+```
 
-The project includes automated tests using Python's built-in unittest library.
+3. Apply database migrations:
 
-To execute all tests, run:
+```bash
+python migrate.py
+```
 
-`python -m unittest discover -s tests -v`
+4. Start the application:
 
-The tests verify financial calculations, transaction management, and JSON storage functionality.
+```bash
+python main.py
+```
 
-## 7. Data Storage
+## Database Migrations
 
-Transaction information is stored locally in `transactions.json`.
+The application uses SQLite for transaction storage.
 
-The application automatically loads previously saved transactions when it starts and saves changes when transactions are added, edited, or deleted.
+Database migrations are stored in the `migrations` directory. Each SQL migration file defines a database structure change.
 
-## 8. Author
+The `migrate.py` script checks which migrations have already been applied and executes only new migrations.
 
-Personal Expense Tracker was developed as an educational project for school purposes.
+Applied migrations are recorded in the `schema_migrations` table.
+
+## Automated Testing
+
+The project uses Python's built-in `unittest` framework.
+
+Run all tests with:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+The test suite covers transaction management, financial statistics, and database storage.
+
+## Continuous Integration
+
+GitHub Actions automatically runs the unit tests whenever changes are pushed to the `main` branch or a pull request is opened targeting `main`.
+
+The workflow is configured in:
+
+```text
+.github/workflows/tests.yml
+```
+
+## Data Storage
+
+Financial transactions are stored locally in the `expenses.db` SQLite database.
+
+The database file is excluded from version control to prevent personal financial data from being uploaded to GitHub.
+
+## Author
+
+Ralfs Zīle
