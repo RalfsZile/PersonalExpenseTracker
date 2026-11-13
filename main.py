@@ -39,10 +39,14 @@ def select_category(categories):
 def add_income():
     try:
         amount = float(input("Enter income amount: "))
-        description = input("Enter income description: ")
+        description = input("Enter income description: ").strip()
 
         if amount <= 0:
             print("Amount must be greater than zero.")
+            return
+
+        if not description:
+            print("Description cannot be empty.")
             return
 
         category = select_category(INCOME_CATEGORIES)
@@ -57,10 +61,14 @@ def add_income():
 def add_expense():
     try:
         amount = float(input("Enter expense amount: "))
-        description = input("Enter expense description: ")
+        description = input("Enter expense description: ").strip()
 
         if amount <= 0:
             print("Amount must be greater than zero.")
+            return
+
+        if not description:
+            print("Description cannot be empty.")
             return
 
         category = select_category(EXPENSE_CATEGORIES)
