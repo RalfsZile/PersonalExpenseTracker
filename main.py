@@ -1,5 +1,6 @@
 from transactions import add_transaction, view_transactions, transactions
 from finance_statistics import display_statistics
+from storage import save_transactions, load_transactions
 
 INCOME_CATEGORIES = ["Salary", "Business", "Investments", "Other"]
 EXPENSE_CATEGORIES = ["Groceries", "Transport", "Entertainment", "Bills", "Other"]
@@ -41,10 +42,10 @@ def add_income():
 
         if category:
             add_transaction("Income", amount, description, category)
+            save_transactions(transactions)
 
     except ValueError:
         print("Please enter a valid number.")
-
 
 def add_expense():
     try:
@@ -63,10 +64,10 @@ def add_expense():
 
         if category:
             add_transaction("Expense", amount, description, category)
+            save_transactions(transactions)
 
     except ValueError:
         print("Please enter a valid number.")
-
 
 def display_menu():
     print("\n================================")
@@ -79,8 +80,9 @@ def display_menu():
     print("5. Exit")
     print("================================")
 
-
 def main():
+    transactions.extend(load_transactions())
+
     try:
         while True:
             display_menu()
