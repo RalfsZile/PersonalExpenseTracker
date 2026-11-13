@@ -72,6 +72,16 @@ def add_expense():
         print("Please enter a valid number.")
 
 
+def calculate_total_income():
+    total = sum(
+        transaction["amount"]
+        for transaction in transactions
+        if transaction["type"] == "Income"
+    )
+
+    return total
+
+
 def display_menu():
     print("\n================================")
     print("     PERSONAL EXPENSE TRACKER")
