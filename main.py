@@ -123,10 +123,6 @@ def view_transactions():
 
 
 def main():
-    print(f"Total income: €{calculate_total_income():.2f}")
-    print(f"Total expenses: €{calculate_total_expenses():.2f}")
-    print(f"Current balance: €{calculate_balance():.2f}")
-
     while True:
         display_menu()
 
