@@ -131,22 +131,26 @@ def view_transactions():
 
 
 def main():
-    while True:
-        display_menu()
+    try:
+        while True:
+            display_menu()
 
-        choice = input("Select an option: ")
+            choice = input("Select an option: ")
 
-        if choice == "1":
-            add_income()
-        elif choice == "2":
-            add_expense()
-        elif choice == "3":
-            view_transactions()
-        elif choice == "4":
-            print("Thank you for using Personal Expense Tracker!")
-            break
-        else:
-            print("Invalid option. Please try again.")
+            if choice == "1":
+                add_income()
+            elif choice == "2":
+                add_expense()
+            elif choice == "3":
+                view_transactions()
+            elif choice == "4":
+                print("Thank you for using Personal Expense Tracker!")
+                break
+            else:
+                print("Invalid option. Please try again.")
+
+    except KeyboardInterrupt:
+        print("\nApplication interrupted. Goodbye!")
 
 
 if __name__ == "__main__":
