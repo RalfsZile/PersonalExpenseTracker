@@ -1,15 +1,19 @@
 
+# Import date functionality for recording transaction dates.
 from datetime import date
 
+# Store all income and expense transactions in a list.
 transactions = []
 
 
+# Create and store a new transaction.
 def add_transaction(transaction_type, amount, description, category):
     transaction = {
         "type": transaction_type,
         "amount": amount,
         "description": description,
         "category": category,
+        # Automatically assign the current date to the transaction.
         "date": date.today().strftime("%Y-%m-%d")
     }
 
@@ -17,6 +21,7 @@ def add_transaction(transaction_type, amount, description, category):
     print("\nTransaction added successfully!")
 
 
+# Display all transactions currently stored in the application.
 def view_transactions():
     if not transactions:
         print("\nNo transactions found.")
@@ -24,6 +29,7 @@ def view_transactions():
 
     print("\n========== TRANSACTIONS ==========")
 
+    # Display each transaction with its corresponding information.
     for index, transaction in enumerate(transactions, start=1):
         print(f"\nTransaction #{index}")
         print(f"Type: {transaction['type']}")
@@ -35,6 +41,7 @@ def view_transactions():
     print("\n==================================")
 
 
+# Remove a selected transaction from the transaction list.
 def delete_transaction():
     if not transactions:
         print("\nNo transactions available to delete.")
@@ -45,6 +52,7 @@ def delete_transaction():
     try:
         choice = int(input("\nEnter transaction number to delete: "))
 
+        # Check whether the selected transaction number exists.
         if 1 <= choice <= len(transactions):
             deleted = transactions.pop(choice - 1)
             print(f"\nDeleted transaction: {deleted['description']}")
@@ -55,6 +63,7 @@ def delete_transaction():
         print("Please enter a valid number.")
 
 
+# Allow the user to modify an existing transaction.
 def edit_transaction(income_categories, expense_categories):
     if not transactions:
         print("\nNo transactions available to edit.")
@@ -65,6 +74,7 @@ def edit_transaction(income_categories, expense_categories):
     try:
         choice = int(input("\nEnter transaction number to edit: "))
 
+        # Validate the selected transaction number.
         if not 1 <= choice <= len(transactions):
             print("Invalid transaction number.")
             return
@@ -73,6 +83,7 @@ def edit_transaction(income_categories, expense_categories):
 
         print("\nLeave a field empty to keep its current value.")
 
+        # Update the transaction amount if a new value is entered.
         new_amount = input(
             f"New amount (€{transaction['amount']:.2f}): "
         )
@@ -86,6 +97,7 @@ def edit_transaction(income_categories, expense_categories):
 
             transaction["amount"] = amount
 
+        # Update the transaction description.
         new_description = input(
             f"New description ({transaction['description']}): "
         ).strip()
@@ -93,6 +105,7 @@ def edit_transaction(income_categories, expense_categories):
         if new_description:
             transaction["description"] = new_description
 
+        # Select the appropriate categories based on transaction type.
         categories = (
             income_categories
             if transaction["type"] == "Income"
@@ -104,6 +117,7 @@ def edit_transaction(income_categories, expense_categories):
         for index, category in enumerate(categories, start=1):
             print(f"{index}. {category}")
 
+        # Allow the user to change the transaction category.
         new_category = input(
             f"New category ({transaction['category']}), or Enter to keep: "
         )
@@ -122,6 +136,7 @@ def edit_transaction(income_categories, expense_categories):
         print("Invalid input. Please enter a valid number.")
 
 
+# Search for transactions using words from their descriptions.
 def search_transactions():
     if not transactions:
         print("\nNo transactions available to search.")
@@ -133,6 +148,7 @@ def search_transactions():
         print("Search term cannot be empty.")
         return
 
+    # Find transactions containing the entered search term.
     results = [
         transaction for transaction in transactions
         if search_term in transaction["description"].lower()
@@ -144,6 +160,7 @@ def search_transactions():
 
     print("\n========== SEARCH RESULTS ==========")
 
+    # Display all transactions matching the search.
     for index, transaction in enumerate(results, start=1):
         print(f"\nResult #{index}")
         print(f"Type: {transaction['type']}")
