@@ -56,9 +56,17 @@ def display_menu():
 def view_transactions():
     if not transactions:
         print("\nNo transactions found.")
-    else:
-        for transaction in transactions:
-            print(transaction)
+        return
+
+    print("\n========== TRANSACTIONS ==========")
+
+    for index, transaction in enumerate(transactions, start=1):
+        print(f"\nTransaction #{index}")
+        print(f"Type: {transaction['type']}")
+        print(f"Amount: €{transaction['amount']:.2f}")
+        print(f"Description: {transaction['description']}")
+
+    print("\n==================================")
 
 
 def main():
