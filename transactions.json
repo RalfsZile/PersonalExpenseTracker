@@ -4,5 +4,12 @@
         "amount": 1400.0,
         "description": "Money",
         "category": "Salary"
+    },
+    {
+        "type": "Expense",
+        "amount": 100.0,
+        "description": "Bill",
+        "category": "Bills",
+        "date": "2026-11-13"
     }
 ]

@@ -1,3 +1,6 @@
+
+from datetime import date
+
 transactions = []
 
 
@@ -6,7 +9,8 @@ def add_transaction(transaction_type, amount, description, category):
         "type": transaction_type,
         "amount": amount,
         "description": description,
-        "category": category
+        "category": category,
+        "date": date.today().strftime("%Y-%m-%d")
     }
 
     transactions.append(transaction)
@@ -26,8 +30,10 @@ def view_transactions():
         print(f"Amount: €{transaction['amount']:.2f}")
         print(f"Description: {transaction['description']}")
         print(f"Category: {transaction['category']}")
+        print(f"Date: {transaction.get('date', 'Unknown')}")
 
     print("\n==================================")
+
 
 def delete_transaction():
     if not transactions:
@@ -47,6 +53,7 @@ def delete_transaction():
 
     except ValueError:
         print("Please enter a valid number.")
+
 
 def edit_transaction(income_categories, expense_categories):
     if not transactions:
