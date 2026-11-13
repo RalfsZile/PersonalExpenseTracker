@@ -1,3 +1,6 @@
+transactions = []
+
+
 def display_menu():
     print("\n================================")
     print("     PERSONAL EXPENSE TRACKER")
@@ -7,6 +10,14 @@ def display_menu():
     print("3. View Transactions")
     print("4. Exit")
     print("================================")
+
+
+def view_transactions():
+    if not transactions:
+        print("\nNo transactions found.")
+    else:
+        for transaction in transactions:
+            print(transaction)
 
 
 def main():
@@ -20,7 +31,7 @@ def main():
         elif choice == "2":
             print("Expense feature coming soon!")
         elif choice == "3":
-            print("Transaction feature coming soon!")
+            view_transactions()
         elif choice == "4":
             print("Thank you for using Personal Expense Tracker!")
             break
