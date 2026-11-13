@@ -1,33 +1,65 @@
+import sqlite3
 
-# Import modules for working with JSON files and file paths.
-import json
-import os
-
-# Define the file used to store transaction information.
-FILE_NAME = "transactions.json"
+# Name of the SQLite database file.
+DATABASE_NAME = "expenses.db"
 
 
-# Save all transactions to the JSON file.
 def save_transactions(transactions):
-    # Open the file in write mode and convert transactions into JSON.
-    with open(FILE_NAME, "w") as file:
-        json.dump(transactions, file, indent=4)
+    # Connect to the database.
+    connection = sqlite3.connect(DATABASE_NAME)
+
+    # Remove existing transactions before saving the updated list.
+    connection.execute("DELETE FROM transactions")
+
+    # Insert each transaction into the database.
+    for transaction in transactions:
+        connection.execute(
+            """
+            INSERT INTO transactions
+            (type, amount, description, category, date)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (
+                transaction["type"],
+                transaction["amount"],
+                transaction["description"],
+                transaction["category"],
+                transaction.get("date", "Unknown")
+            )
+        )
+
+    # Save the changes and close the connection.
+    connection.commit()
+    connection.close()
 
     print("\nTransactions saved successfully!")
 
 
-# Load previously saved transactions from the JSON file.
 def load_transactions():
-    # Check whether the transaction file exists.
-    if not os.path.exists(FILE_NAME):
-        return []
+    # Connect to the database.
+    connection = sqlite3.connect(DATABASE_NAME)
+    cursor = connection.cursor()
 
-    try:
-        # Read the JSON file and convert its contents into Python data.
-        with open(FILE_NAME, "r") as file:
-            return json.load(file)
+    # Retrieve all transactions in their original order.
+    cursor.execute("""
+        SELECT type, amount, description, category, date
+        FROM transactions
+        ORDER BY id
+    """)
 
-    # Handle invalid JSON data or file access errors.
-    except (json.JSONDecodeError, OSError):
-        print("Could not load transaction data.")
-        return []
+    rows = cursor.fetchall()
+
+    # Close the database connection.
+    connection.close()
+
+    # Convert database rows into Python dictionaries.
+    return [
+        {
+            "type": row[0],
+            "amount": row[1],
+            "description": row[2],
+            "category": row[3],
+            "date": row[4]
+        }
+        for row in rows
+    ]

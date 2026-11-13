@@ -1,7 +1,7 @@
 # Import the unittest framework for automated testing.
 import unittest
 
-# Import transaction functions and the shared transaction list.
+# Import transaction management functions and the transaction list from the application.
 from transactions import add_transaction, transactions
 
 

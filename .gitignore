@@ -1,8 +1,8 @@
 __pycache__/
 *.pyc
-*.pyo
-.vscode/
 .venv/
 venv/
 transactions.json
 test_transactions.json
+test_expenses.db
+expenses.db

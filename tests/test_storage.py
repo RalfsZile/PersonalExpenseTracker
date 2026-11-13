@@ -1,71 +1,81 @@
-# Import libraries for testing, file management, and JSON operations.
 import unittest
 import os
-import json
+import sqlite3
+import storage
 
-# Import functions responsible for saving and loading transactions.
+# Import the storage functions being tested.
 from storage import save_transactions, load_transactions
 
 
-# Create a test class for JSON storage functionality.
 class TestStorage(unittest.TestCase):
 
-    # Prepare a separate test file before each test.
     def setUp(self):
-        self.test_file = "test_transactions.json"
+        # Create a separate database for testing.
+        self.test_database = "test_expenses.db"
+        self.original_database = storage.DATABASE_NAME
+        storage.DATABASE_NAME = self.test_database
 
-        import storage
+        # Create the transactions table in the test database.
+        connection = sqlite3.connect(self.test_database)
+        connection.execute("""
+            CREATE TABLE IF NOT EXISTS transactions (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                type TEXT NOT NULL,
+                amount REAL NOT NULL,
+                description TEXT NOT NULL,
+                category TEXT NOT NULL,
+                date TEXT NOT NULL
+            )
+        """)
+        connection.commit()
+        connection.close()
 
-        # Temporarily change the storage filename for testing.
-        self.original_file = storage.FILE_NAME
-        storage.FILE_NAME = self.test_file
-
-    # Restore the original filename after each test.
     def tearDown(self):
-        import storage
+        # Restore the original database configuration.
+        storage.DATABASE_NAME = self.original_database
 
-        storage.FILE_NAME = self.original_file
+        # Delete the temporary test database.
+        if os.path.exists(self.test_database):
+            os.remove(self.test_database)
 
-        # Remove the temporary test file if it exists.
-        if os.path.exists(self.test_file):
-            os.remove(self.test_file)
-
-    # Check whether transactions are saved to a JSON file.
     def test_save_transactions(self):
+        # Prepare an example income transaction.
         transactions = [
             {
                 "type": "Income",
                 "amount": 1500,
                 "description": "Salary",
-                "category": "Salary"
+                "category": "Salary",
+                "date": "2026-11-13"
             }
         ]
 
+        # Save the transaction and verify that it exists.
         save_transactions(transactions)
 
-        self.assertTrue(os.path.exists(self.test_file))
+        self.assertEqual(len(load_transactions()), 1)
 
-    # Check whether saved transactions can be loaded correctly.
     def test_load_transactions(self):
+        # Prepare an example expense transaction.
         transactions = [
             {
                 "type": "Expense",
                 "amount": 50,
                 "description": "Groceries",
-                "category": "Groceries"
+                "category": "Groceries",
+                "date": "2026-11-13"
             }
         ]
 
-        # Write sample transaction data into the temporary JSON file.
-        with open(self.test_file, "w") as file:
-            json.dump(transactions, file)
-
+        # Save and retrieve the transaction.
+        save_transactions(transactions)
         result = load_transactions()
 
+        # Check that the retrieved data matches the original data.
         self.assertEqual(result, transactions)
 
-    # Check whether a missing JSON file returns an empty list.
-    def test_missing_file(self):
+    def test_empty_database(self):
+        # Check that an empty database returns an empty list.
         result = load_transactions()
 
         self.assertEqual(result, [])
