@@ -27,6 +27,21 @@ def add_income():
         print("Please enter a valid number.")
 
 
+def add_expense():
+    try:
+        amount = float(input("Enter expense amount: "))
+        description = input("Enter expense description: ")
+
+        if amount <= 0:
+            print("Amount must be greater than zero.")
+            return
+
+        add_transaction("Expense", amount, description)
+
+    except ValueError:
+        print("Please enter a valid number.")
+
+
 def display_menu():
     print("\n================================")
     print("     PERSONAL EXPENSE TRACKER")
@@ -55,7 +70,7 @@ def main():
         if choice == "1":
             add_income()
         elif choice == "2":
-            print("Expense feature coming soon!")
+            add_expense()
         elif choice == "3":
             view_transactions()
         elif choice == "4":
