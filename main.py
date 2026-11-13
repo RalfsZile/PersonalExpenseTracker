@@ -1,4 +1,5 @@
 from transactions import add_transaction, view_transactions, transactions
+from finance_statistics import display_statistics
 
 INCOME_CATEGORIES = ["Salary", "Business", "Investments", "Other"]
 EXPENSE_CATEGORIES = ["Groceries", "Transport", "Entertainment", "Bills", "Other"]
@@ -67,28 +68,6 @@ def add_expense():
         print("Please enter a valid number.")
 
 
-def calculate_total_income():
-    total = sum(
-        transaction["amount"]
-        for transaction in transactions
-        if transaction["type"] == "Income"
-    )
-
-    return total
-
-def calculate_total_expenses():
-    total = sum(
-        transaction["amount"]
-        for transaction in transactions
-        if transaction["type"] == "Expense"
-    )
-
-    return total
-
-def calculate_balance():
-    balance = calculate_total_income() - calculate_total_expenses()
-    return balance
-
 def display_menu():
     print("\n================================")
     print("     PERSONAL EXPENSE TRACKER")
@@ -96,7 +75,8 @@ def display_menu():
     print("1. Add Income")
     print("2. Add Expense")
     print("3. View Transactions")
-    print("4. Exit")
+    print("4. View Statistics")
+    print("5. Exit")
     print("================================")
 
 
@@ -114,6 +94,8 @@ def main():
             elif choice == "3":
                 view_transactions()
             elif choice == "4":
+                display_statistics(transactions)
+            elif choice == "5":
                 print("Thank you for using Personal Expense Tracker!")
                 break
             else:
