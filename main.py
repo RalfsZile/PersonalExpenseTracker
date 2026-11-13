@@ -1,20 +1,7 @@
-transactions = []
+from transactions import add_transaction, view_transactions, transactions
 
 INCOME_CATEGORIES = ["Salary", "Business", "Investments", "Other"]
 EXPENSE_CATEGORIES = ["Groceries", "Transport", "Entertainment", "Bills", "Other"]
-
-
-def add_transaction(transaction_type, amount, description, category):
-    transaction = {
-        "type": transaction_type,
-        "amount": amount,
-        "description": description,
-        "category": category
-    }
-
-    transactions.append(transaction)
-    print("\nTransaction added successfully!")
-
 
 def select_category(categories):
     print("\nAvailable categories:")
@@ -111,23 +98,6 @@ def display_menu():
     print("3. View Transactions")
     print("4. Exit")
     print("================================")
-
-
-def view_transactions():
-    if not transactions:
-        print("\nNo transactions found.")
-        return
-
-    print("\n========== TRANSACTIONS ==========")
-
-    for index, transaction in enumerate(transactions, start=1):
-        print(f"\nTransaction #{index}")
-        print(f"Type: {transaction['type']}")
-        print(f"Amount: €{transaction['amount']:.2f}")
-        print(f"Description: {transaction['description']}")
-        print(f"Category: {transaction['category']}")
-
-    print("\n==================================")
 
 
 def main():
