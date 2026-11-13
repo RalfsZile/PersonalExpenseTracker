@@ -1,8 +1,8 @@
-
 from transactions import (
     add_transaction,
     view_transactions,
     delete_transaction,
+    edit_transaction,
     transactions
 )
 from finance_statistics import display_statistics
@@ -87,7 +87,8 @@ def display_menu():
     print("3. View Transactions")
     print("4. View Statistics")
     print("5. Delete Transaction")
-    print("6. Exit")
+    print("6. Edit Transaction")
+    print("7. Exit")
     print("================================")
 
 
@@ -102,18 +103,28 @@ def main():
 
             if choice == "1":
                 add_income()
+
             elif choice == "2":
                 add_expense()
+
             elif choice == "3":
                 view_transactions()
+
             elif choice == "4":
                 display_statistics(transactions)
+
             elif choice == "5":
                 delete_transaction()
                 save_transactions(transactions)
+
             elif choice == "6":
+                edit_transaction(INCOME_CATEGORIES, EXPENSE_CATEGORIES)
+                save_transactions(transactions)
+
+            elif choice == "7":
                 print("Thank you for using Personal Expense Tracker!")
                 break
+
             else:
                 print("Invalid option. Please try again.")
 
