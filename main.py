@@ -81,6 +81,14 @@ def calculate_total_income():
 
     return total
 
+def calculate_total_expenses():
+    total = sum(
+        transaction["amount"]
+        for transaction in transactions
+        if transaction["type"] == "Expense"
+    )
+
+    return total
 
 def display_menu():
     print("\n================================")
