@@ -120,3 +120,36 @@ def edit_transaction(income_categories, expense_categories):
 
     except ValueError:
         print("Invalid input. Please enter a valid number.")
+
+
+def search_transactions():
+    if not transactions:
+        print("\nNo transactions available to search.")
+        return
+
+    search_term = input("\nEnter description to search: ").strip().lower()
+
+    if not search_term:
+        print("Search term cannot be empty.")
+        return
+
+    results = [
+        transaction for transaction in transactions
+        if search_term in transaction["description"].lower()
+    ]
+
+    if not results:
+        print("\nNo matching transactions found.")
+        return
+
+    print("\n========== SEARCH RESULTS ==========")
+
+    for index, transaction in enumerate(results, start=1):
+        print(f"\nResult #{index}")
+        print(f"Type: {transaction['type']}")
+        print(f"Amount: €{transaction['amount']:.2f}")
+        print(f"Description: {transaction['description']}")
+        print(f"Category: {transaction['category']}")
+        print(f"Date: {transaction.get('date', 'Unknown')}")
+
+    print("\n====================================")
