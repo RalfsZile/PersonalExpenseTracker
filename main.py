@@ -1,6 +1,17 @@
 transactions = []
 
 
+def add_transaction(transaction_type, amount, description):
+    transaction = {
+        "type": transaction_type,
+        "amount": amount,
+        "description": description
+    }
+
+    transactions.append(transaction)
+    print("\nTransaction added successfully!")
+
+
 def display_menu():
     print("\n================================")
     print("     PERSONAL EXPENSE TRACKER")
