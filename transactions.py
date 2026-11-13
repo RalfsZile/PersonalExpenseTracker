@@ -28,3 +28,22 @@ def view_transactions():
         print(f"Category: {transaction['category']}")
 
     print("\n==================================")
+
+def delete_transaction():
+    if not transactions:
+        print("\nNo transactions available to delete.")
+        return
+
+    view_transactions()
+
+    try:
+        choice = int(input("\nEnter transaction number to delete: "))
+
+        if 1 <= choice <= len(transactions):
+            deleted = transactions.pop(choice - 1)
+            print(f"\nDeleted transaction: {deleted['description']}")
+        else:
+            print("Invalid transaction number.")
+
+    except ValueError:
+        print("Please enter a valid number.")

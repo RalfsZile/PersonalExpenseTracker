@@ -4,11 +4,5 @@
         "amount": 1500.0,
         "description": "Money",
         "category": "Salary"
-    },
-    {
-        "type": "Expense",
-        "amount": 50.0,
-        "description": "Fuel",
-        "category": "Transport"
     }
 ]

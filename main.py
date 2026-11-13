@@ -1,9 +1,16 @@
-from transactions import add_transaction, view_transactions, transactions
+
+from transactions import (
+    add_transaction,
+    view_transactions,
+    delete_transaction,
+    transactions
+)
 from finance_statistics import display_statistics
 from storage import save_transactions, load_transactions
 
 INCOME_CATEGORIES = ["Salary", "Business", "Investments", "Other"]
 EXPENSE_CATEGORIES = ["Groceries", "Transport", "Entertainment", "Bills", "Other"]
+
 
 def select_category(categories):
     print("\nAvailable categories:")
@@ -47,6 +54,7 @@ def add_income():
     except ValueError:
         print("Please enter a valid number.")
 
+
 def add_expense():
     try:
         amount = float(input("Enter expense amount: "))
@@ -69,6 +77,7 @@ def add_expense():
     except ValueError:
         print("Please enter a valid number.")
 
+
 def display_menu():
     print("\n================================")
     print("     PERSONAL EXPENSE TRACKER")
@@ -77,8 +86,10 @@ def display_menu():
     print("2. Add Expense")
     print("3. View Transactions")
     print("4. View Statistics")
-    print("5. Exit")
+    print("5. Delete Transaction")
+    print("6. Exit")
     print("================================")
+
 
 def main():
     transactions.extend(load_transactions())
@@ -98,6 +109,9 @@ def main():
             elif choice == "4":
                 display_statistics(transactions)
             elif choice == "5":
+                delete_transaction()
+                save_transactions(transactions)
+            elif choice == "6":
                 print("Thank you for using Personal Expense Tracker!")
                 break
             else:
