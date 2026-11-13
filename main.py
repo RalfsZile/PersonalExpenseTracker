@@ -1,15 +1,39 @@
 transactions = []
 
+INCOME_CATEGORIES = ["Salary", "Business", "Investments", "Other"]
+EXPENSE_CATEGORIES = ["Groceries", "Transport", "Entertainment", "Bills", "Other"]
 
-def add_transaction(transaction_type, amount, description):
+
+def add_transaction(transaction_type, amount, description, category):
     transaction = {
         "type": transaction_type,
         "amount": amount,
-        "description": description
+        "description": description,
+        "category": category
     }
 
     transactions.append(transaction)
     print("\nTransaction added successfully!")
+
+
+def select_category(categories):
+    print("\nAvailable categories:")
+
+    for index, category in enumerate(categories, start=1):
+        print(f"{index}. {category}")
+
+    try:
+        choice = int(input("Select a category: "))
+
+        if 1 <= choice <= len(categories):
+            return categories[choice - 1]
+
+        print("Invalid category selection.")
+
+    except ValueError:
+        print("Please enter a valid number.")
+
+    return None
 
 
 def add_income():
@@ -21,7 +45,10 @@ def add_income():
             print("Amount must be greater than zero.")
             return
 
-        add_transaction("Income", amount, description)
+        category = select_category(INCOME_CATEGORIES)
+
+        if category:
+            add_transaction("Income", amount, description, category)
 
     except ValueError:
         print("Please enter a valid number.")
@@ -36,7 +63,10 @@ def add_expense():
             print("Amount must be greater than zero.")
             return
 
-        add_transaction("Expense", amount, description)
+        category = select_category(EXPENSE_CATEGORIES)
+
+        if category:
+            add_transaction("Expense", amount, description, category)
 
     except ValueError:
         print("Please enter a valid number.")
@@ -65,6 +95,7 @@ def view_transactions():
         print(f"Type: {transaction['type']}")
         print(f"Amount: €{transaction['amount']:.2f}")
         print(f"Description: {transaction['description']}")
+        print(f"Category: {transaction['category']}")
 
     print("\n==================================")
 
